@@ -23,5 +23,7 @@
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+    <PackageId>Samhammer.$(AssemblyName)</PackageId>
+    <RepositoryUrl>https://github.com/SamhammerAG/azure-sdk-for-net</RepositoryUrl>
   </PropertyGroup>
 </Project>
