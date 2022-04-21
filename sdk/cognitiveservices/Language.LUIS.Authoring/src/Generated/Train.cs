@@ -65,6 +65,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='versionId'>
         /// The version ID.
         /// </param>
+        /// <param name='mode'>
+        /// An enum value specifying mode of training.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -86,7 +89,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<EnqueueTrainingResponse>> TrainVersionWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EnqueueTrainingResponse>> TrainVersionWithHttpMessagesAsync(System.Guid appId, string versionId, string mode = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -105,6 +108,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
+                tracingParameters.Add("mode", mode);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "TrainVersion", tracingParameters);
             }
@@ -114,6 +118,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
+            List<string> _queryParameters = new List<string>();
+            if (mode != null)
+            {
+                _queryParameters.Add(string.Format("mode={0}", System.Uri.EscapeDataString(mode)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
